@@ -6,14 +6,35 @@ import { TriviaCategoryService } from '../service/trivia-category.service';
 import { Router } from '@angular/router';
 import { QuizResultService } from '../service/quiz-result.service';
 
-interface Answer {
-  Ans: string;
+export interface Answer {
+  answer: string;
   selected: boolean;
 }
-interface Quiz {
+export interface Quiz {
   Question: string;
-  Answer: Answer[];
+  answers: Answer[];
   correctAnswer: string
+}
+
+ export interface QuizResponse {
+  response_code: number;
+  results: Question[];
+}
+export interface Question {
+  category: string;
+  type: string;
+  difficulty: string;
+  question: string;
+  correct_answer: string;
+  incorrect_answers: string[];
+}
+
+export interface TriviaCategoryResponse {
+  trivia_categories: TriviaCategory[];
+}
+export interface TriviaCategory{
+  id: string,
+  name: string
 }
 
 @Component({
@@ -29,15 +50,15 @@ export class CategoryComponent implements OnInit {
     private result: QuizResultService
   ) {}
   quizz:any[] = [];
-  shuffledAnswer!: any[];
+  shuffledAnswer!: Answer[];
   selectedAnswer: number = 0;
-  trivia: any;
+  trivia!: TriviaCategoryResponse;
   questions: any;
-  selectedCategory: any = 'Select a category';
-  selectedDifficulty: any = 'Select difficulty';
-
+  selectedCategory: TriviaCategory = {id:'Select a category',name:'Select a category'};
+  selectedDifficulty: string = 'Select difficulty';
+  //trivia?.trivia_categories
   ngOnInit(): void {
-    this._trivia.getTriviaCategory().subscribe((data) => {
+    this._trivia.getTriviaCategory().subscribe((data:TriviaCategoryResponse) => {
       this.trivia = data;
     });
   }
@@ -50,14 +71,14 @@ export class CategoryComponent implements OnInit {
         this.selectedCategory.id,
         this.selectedDifficulty.toLowerCase()
       )
-      .subscribe((data: any) => {
+      .subscribe((data: QuizResponse) => {
         this.questions = data;
         this.getQuestions(this.questions?.results)
       });
 
   }
 
-  getQuestions(results: any) {
+  getQuestions(results: Question[]) {
     for(let result of results){
       let question = result?.question;
       let quiz!: Quiz;
@@ -65,7 +86,7 @@ export class CategoryComponent implements OnInit {
       quiz={
         Question:question,
         correctAnswer:result?.correct_answer,
-        Answer:answer
+        answers:answer
       }
       this.quizz.push(quiz)
     }
@@ -78,12 +99,12 @@ export class CategoryComponent implements OnInit {
       allAnswer.push(correctAns);
       allAnswer = [...allAnswer, ...incorrectAns];
       
-      this.shuffledAnswer = allAnswer
+      allAnswer = allAnswer
         .map((value) => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value);
-      this.shuffledAnswer = this.shuffledAnswer.map((answer: any) => ({
-        answer,
+      this.shuffledAnswer = allAnswer.map((answer: any) => ({
+        answer:answer,
         selected: false,
       }));
 
@@ -91,8 +112,8 @@ export class CategoryComponent implements OnInit {
     return this.shuffledAnswer;
   }
 
-  selecteAnswer(option: any, questionIndex: number, answerIndex: number) {
-    let availableOptions = this.quizz[questionIndex].Answer;
+  selecteAnswer(option: Answer, questionIndex: number) {
+    let availableOptions = this.quizz[questionIndex].answers;
     for (let index in availableOptions) {
       if (availableOptions[index].answer === option.answer) {
         availableOptions[index].selected = !availableOptions[index].selected;

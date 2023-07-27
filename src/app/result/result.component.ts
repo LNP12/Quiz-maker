@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizResultService } from '../service/quiz-result.service';
+import { Answer, Quiz } from '../category/category.component';
 
 @Component({
   selector: 'app-result',
@@ -9,12 +10,12 @@ import { QuizResultService } from '../service/quiz-result.service';
 export class ResultComponent implements OnInit {
 
   constructor(private result: QuizResultService) { }
- quizz: any[] = [];
+ quizz: Quiz[] = [];
  correctAnsCount : number = 0;
   ngOnInit(): void {
-    this.result.result$.subscribe((data:any)=>{this.quizz = data});
+    this.result.result$.subscribe((data:Quiz[])=>{this.quizz = data});
   }
-  getBtnClass(option: any, quiz:any){
+  getBtnClass(option: Answer, quiz:Quiz){
 
     let btnClass: string =''; 
     if(option?.selected){

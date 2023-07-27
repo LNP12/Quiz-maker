@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+{{quizz|json}}
 <h2>QUIZ MAKER</h2>
 <div class="container-fluid">
     <div class="well">
         <select class="form-select" aria-label="Select a category" [(ngModel)]="selectedCategory">
-            <option value="Select a category" id="Select a category" disabled selected>Select a category</option>
-            <option *ngFor="let category of trivia?.trivia_categories" [id]="category.name" [ngValue]="category">
+            <option [ngValue]="selectedCategory" id="Select a category" disabled selected>{{selectedCategory.name}}</option>
+            <option *ngFor="let category of trivia?.trivia_categories" [id]="category" [ngValue]="category">
                 {{category.name}}</option>
         </select>
         <select class="form-select" aria-label="Select difficulty" [(ngModel)]="selectedDifficulty">
@@ -23,8 +24,8 @@
 
         </div>
         <br>
-        <ng-container *ngFor="let option of quiz.Answer;let ansIndex=index">
-            <button #answers type="button" (click)="selecteAnswer(option, quesIndex, ansIndex)"
+        <ng-container *ngFor="let option of quiz.answers">
+            <button #answers type="button" (click)="selecteAnswer(option, quesIndex)"
                 [innerHTML]="option?.answer" class="btn options "
                 [ngClass]="option?.selected? 'btn-success' : 'btn-outline-success'"></button>
         </ng-container>

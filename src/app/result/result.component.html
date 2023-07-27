@@ -4,7 +4,7 @@
     <div [innerHTML]="quiz?.Question">
     </div>
     <br>
-    <ng-container *ngFor="let option of quiz.Answer" >
+    <ng-container *ngFor="let option of quiz.answers" >
      <button  type="button" [innerHTML]="option?.answer"
         class="btn options "  [ngClass]="getBtnClass(option,quiz)"></button> 
     </ng-container>
