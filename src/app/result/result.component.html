@@ -1,0 +1,14 @@
+<h2>RESULT</h2>
+
+<div class="flex" *ngFor="let quiz of quizz">
+    <div [innerHTML]="quiz?.Question">
+    </div>
+    <br>
+    <ng-container *ngFor="let option of quiz.Answer" >
+     <button  type="button" [innerHTML]="option?.answer"
+        class="btn options "  [ngClass]="getBtnClass(option,quiz)"></button> 
+    </ng-container>
+        <br>
+</div>
+<span *ngIf="quizz.length>0" [style.background-color]="getColorClass()"> you scored {{correctAnsCount}} out of {{quizz.length}}</span>
+<button type="button" class="btn btn-secondary" [routerLink]="['']" >Create a new quiz</button>

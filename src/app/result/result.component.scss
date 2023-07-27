@@ -1,0 +1,33 @@
+.btn-outline-success{
+    color: var(--bs-btn-hover); 
+     background-color: var(--bs-btn-bg);
+}
+
+.btn-danger{
+    --bs-btn-border-color: green;
+}
+
+.flex{
+    margin-left: 5rem;
+}
+
+h2{
+    text-align: center;
+}
+
+.options{
+    margin-right: 1rem;
+}
+span{
+    display: table;
+    width: 25%;
+    text-align: center;
+    margin-left: 40%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.btn-secondary{
+    width: 100%;
+    margin-bottom: 2rem;
+}
