@@ -49,7 +49,7 @@ export class CategoryComponent implements OnInit {
     private router: Router,
     private result: QuizResultService
   ) {}
-  quizz:Quiz[] = [];
+  quizDetail:Quiz[] = [];
   shuffledAnswer!: Answer[];
   selectedAnswer: number = 0;
   trivia!: TriviaCategoryResponse;
@@ -88,7 +88,7 @@ export class CategoryComponent implements OnInit {
         correctAnswer:result?.correct_answer,
         answers:answer
       }
-      this.quizz.push(quiz)
+      this.quizDetail.push(quiz)
     }
     
 
@@ -113,7 +113,7 @@ export class CategoryComponent implements OnInit {
   }
 
   selecteAnswer(option: Answer, questionIndex: number) {
-    let availableOptions = this.quizz[questionIndex].answers;
+    let availableOptions = this.quizDetail[questionIndex].answers;
     for (let index in availableOptions) {
       if (availableOptions[index].answer === option.answer) {
         availableOptions[index].selected = !availableOptions[index].selected;
@@ -130,7 +130,7 @@ export class CategoryComponent implements OnInit {
     }
   }
   submit(){
-    this.result.sendQuizResult(this.quizz);
+    this.result.sendQuizResult(this.quizDetail);
     this.router.navigate(['/submit']);
   }
 }
