@@ -13,7 +13,6 @@ export class QuizResultService {
   result$ = this._QuizResult.asObservable();
 
   sendQuizResult(result: Quiz[]) {
-    console.log(result);
     this._QuizResult.next(result);
     }
 }

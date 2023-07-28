@@ -49,11 +49,11 @@ export class CategoryComponent implements OnInit {
     private router: Router,
     private result: QuizResultService
   ) {}
-  quizz:any[] = [];
+  quizz:Quiz[] = [];
   shuffledAnswer!: Answer[];
   selectedAnswer: number = 0;
   trivia!: TriviaCategoryResponse;
-  questions: any;
+  questions!: QuizResponse;
   selectedCategory: TriviaCategory = {id:'Select a category',name:'Select a category'};
   selectedDifficulty: string = 'Select difficulty';
   //trivia?.trivia_categories
@@ -103,7 +103,7 @@ export class CategoryComponent implements OnInit {
         .map((value) => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value);
-      this.shuffledAnswer = allAnswer.map((answer: any) => ({
+      this.shuffledAnswer = allAnswer.map((answer: string) => ({
         answer:answer,
         selected: false,
       }));
