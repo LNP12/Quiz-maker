@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizResultService } from '../service/quiz-result.service';
-import { Answer, Quiz } from '../category/category.component';
+import { Answer, Quiz } from '../modal/IQuizMaker';
 
 @Component({
   selector: 'app-result',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Quiz } from '../category/category.component';
+import { Quiz } from '../modal/IQuizMaker';
 
 @Injectable({
   providedIn: 'root'
